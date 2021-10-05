@@ -1,4 +1,5 @@
 ﻿using AutoCenter.Domain.Interfaces;
+using AutoCenter.Repository.Context;
 using AutoCenter.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -8,60 +9,61 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace AutoCenter.Repository
 {
-   public class BaseRepository<T>: IRepository<T> where T: class, IEntity
+   
+   public abstract class BaseRepository<TModel> : IRepository<TModel> where TModel : class, IIdentity
    {
-      AppContext _context;
-      private DbSet<T> _dbSet;
-
-      public BaseRepository(AppContext appContext)
+      public BaseRepository()
       {
-         _context = appContext;
-         _dbSet = _context.Set<T>();
+         DbContext = new AppDbContext();
       }
 
-      public virtual T Insert(T model)
+      public AppDbContext DbContext { get; set; }
+      public DbSet<TModel> DbSet => DbContext.Set<TModel>();
+
+      public virtual TModel Insert(TModel model)
       {
-         _dbSet.Add(model);
+         DbSet.Add(model);
          return model;
       }
 
-      public virtual T Update(T model)
+      public virtual TModel Update(TModel model)
       {
-         _dbSet.Update(model);
+         DbSet.Update(model);
          return model;
       }
 
-      public virtual T Delete(T model)
+      public virtual TModel Delete(TModel model)
       {
-         _dbSet.Remove(model);
+         DbSet.Remove(model);
          return model;
       }
 
-      public virtual IEnumerable<T> SelectAll()
+      public virtual IEnumerable<TModel> SelectAll()
       {
-         return _dbSet.AsEnumerable();
+         return DbSet.AsEnumerable();
       }
 
-      public virtual T Where(Func<T, bool> predicate)
+      public virtual TModel Select(Func<TModel, bool> predicate)
       {
-         return _dbSet.FirstOrDefault(predicate);
+         return DbSet.FirstOrDefault(predicate);
       }
 
       public virtual IDbContextTransaction BeginTransaction()
       {
-         return _context.Database.BeginTransaction();
+         return DbContext.Database.BeginTransaction();
       }
 
       public virtual void CommitTransaction()
       {
-         _context.Database.CommitTransaction();
+         DbContext.Database.CommitTransaction();
       }
 
       public virtual void RollbackTransaction()
       {
-         _context.Database.RollbackTransaction();
+         DbContext.Database.RollbackTransaction();
       }
    }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoCenter.Domain;
+using AutoCenter.Repository.Context;
 using AutoCenter.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace AutoCenter.Repository
 {
    public class ManagerRepository : BaseRepository<Manager>, IRepository<Manager>
    {
-      public ManagerRepository(AppContext context) : base(context)
+      public ManagerRepository() : base()
       {
 
       }

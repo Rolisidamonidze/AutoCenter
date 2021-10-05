@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AutoCenter.Domain.Interfaces
 {
-   public interface IEntity
+   public interface IIdentity
    {
       int ID { get; set; }
    }

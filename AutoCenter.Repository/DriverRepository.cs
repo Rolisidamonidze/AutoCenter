@@ -1,4 +1,5 @@
 ﻿using AutoCenter.Domain;
+using AutoCenter.Repository.Context;
 using AutoCenter.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace AutoCenter.Repository
 {
    public class DriverRepository : BaseRepository<Driver>, IRepository<Driver>
    {
-      public DriverRepository(AppContext context) : base(context)
+      public DriverRepository() : base()
       {
 
       }
