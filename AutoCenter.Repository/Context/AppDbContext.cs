@@ -30,8 +30,6 @@ namespace AutoCenter.Repository.Context
          carType.HasKey(ct => ct.ID);
          carType.HasAlternateKey(ct => ct.Name);
          carType.Property(ct => ct.Name).IsRequired().HasMaxLength(20);
-         carType.HasOne(ct => ct.Technician);
-
 
          var customer = modelBuilder.Entity<Customer>();
          customer.HasKey(c => c.ID);
@@ -52,18 +50,15 @@ namespace AutoCenter.Repository.Context
          employee.Property(e => e.IsDeleted).IsRequired();
 
          var technician = modelBuilder.Entity<Technician>();
-         technician.HasKey(t => t.ID);
          technician.Property(t => t.Experience).IsRequired().HasMaxLength(400);
          technician.Property(t => t.Qualification).IsRequired().HasMaxLength(300);
 
          var administrator = modelBuilder.Entity<Manager>();
-         administrator.HasKey(a => a.ID);
          administrator.Property(a => a.Education).IsRequired().HasMaxLength(400);
          administrator.Property(a => a.Position).IsRequired().HasMaxLength(50);
 
 
          var driver = modelBuilder.Entity<Driver>();
-         driver.HasKey(d => d.ID);
          driver.Property(d => d.LicenseCategory).IsRequired().HasMaxLength(10);
          driver.Property(d => d.LicenseNumbers).IsRequired().HasMaxLength(12);
 
@@ -75,7 +70,7 @@ namespace AutoCenter.Repository.Context
 
       protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
       {
-         optionsBuilder.UseSqlServer(@"server=.\sqlexpress;database=AutoCenter;integrated security=true;");
+         optionsBuilder.UseSqlServer(@"server=localhost;database=AutoCenter;uid=SA;pwd=Ledzeppelin987");
       }
 
       public DbSet<Car> Cars { get; set; }

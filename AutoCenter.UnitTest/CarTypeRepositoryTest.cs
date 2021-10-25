@@ -15,7 +15,15 @@ namespace AutoCenter.UnitTest
       {
          ModelForInsert = new CarType
          {
-            Name = "Sedan"
+            Name = "Sedan",
+            Technician = new Technician()
+            {
+               FirstName = "Sergi",
+               LastName = "Jajanidze",
+               Address = "Merve polki",
+               Experience = "Didi gamocdileba",
+               Qualification = "magari kvalifikacia"
+            }
          };
       }
    }

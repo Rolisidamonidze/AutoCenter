@@ -27,13 +27,10 @@ namespace AutoCenter.UnitTest
 
       [Fact]
       public virtual void Insert()
-      {
-         var initialCount = Repository.DbSet.Count();
+      { 
          Repository.Insert(ModelForInsert);
          Repository.DbContext.SaveChanges();
-         var finalCount = Repository.DbSet.Count();
-
-         Assert.Equal(initialCount + 1, finalCount);
+         Assert.NotNull(ModelForInsert.ID);
       }
    }
 }
